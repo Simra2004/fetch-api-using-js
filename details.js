@@ -10,4 +10,9 @@ async function displayPostDetails() {
         : `<p style="color: red;">Post not found.</p>`;
 }
 
+function goBack() {
+    window.location.href = "index.html";
+}
+document.getElementById("back-button").addEventListener("click", goBack);
+
 displayPostDetails();
