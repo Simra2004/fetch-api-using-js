@@ -1,36 +1,21 @@
-const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
-async function fetchanddisplay() {
-    try {
-        const res = await fetch(apiUrl);
+import { getPosts } from './api.js';
 
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
+async function displayPosts() {
+    const posts = await getPosts();
+    const tableBody = document.querySelector("#posts-table tbody");
 
-        const posts = await res.json();
-        const tableBody = document.querySelector("#posts-table tbody");
-
-        // Display only the first 20 posts
-        posts.slice(0, 20).forEach(post => {
-            const row = `
-                <tr>
-                    <td>${post.id}</td>
-                    <td>${post.title} 
-                        <button onclick="viewDetails(${post.id})">Show More</button>
-                    </td>
-                </tr>
-            `;
-            tableBody.innerHTML += row;
-        });
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        document.body.innerHTML += `<p style="color: red;">Failed to load data. Please try again later.</p>`;
-    }
+    tableBody.innerHTML = posts.slice(0, 20).map(post => `
+        <tr>
+            <td>${post.id}</td>
+            <td>${post.title} 
+                <button onclick="viewDetails(${post.id})">Show More</button>
+            </td>
+        </tr>
+    `).join('');
 }
 
-// Function to redirect to details page with post ID as a query parameter
-function viewDetails(postId) {
+window.viewDetails = (postId) => {
     window.location.href = `details.html?id=${postId}`;
-}
+};
 
-fetchanddisplay();
+displayPosts();
