@@ -16,8 +16,7 @@ async function fetchanddisplay() {
                 <tr>
                     <td>${post.id}</td>
                     <td>${post.title} 
-                        <button onclick="toggleBody(${post.id})" id="btn-${post.id}">Show More</button>
-                        <p id="body-${post.id}" style="display: none;">${post.body}</p>
+                        <button onclick="viewDetails(${post.id})">Show More</button>
                     </td>
                 </tr>
             `;
@@ -29,18 +28,9 @@ async function fetchanddisplay() {
     }
 }
 
-// Function to toggle the body of the post
-function toggleBody(postId) {
-    const bodyElement = document.getElementById(`body-${postId}`);
-    const button = document.getElementById(`btn-${postId}`);
-    
-    if (bodyElement.style.display === "none") {
-        bodyElement.style.display = "block";
-        button.textContent = "Show Less";
-    } else {
-        bodyElement.style.display = "none";
-        button.textContent = "Show More";
-    }
+// Function to redirect to details page with post ID as a query parameter
+function viewDetails(postId) {
+    window.location.href = `details.html?id=${postId}`;
 }
 
 fetchanddisplay();
